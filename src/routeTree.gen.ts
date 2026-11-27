@@ -10,33 +10,158 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthenticatedAffiliationRouteImport } from './routes/_authenticated/affiliation'
+import { Route as AuthenticatedAnalytiqueRouteImport } from './routes/_authenticated/analytique'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedDocumentationRouteImport } from './routes/_authenticated/documentation'
+import { Route as AuthenticatedIntegrationsRouteImport } from './routes/_authenticated/integrations'
+import { Route as AuthenticatedParametresRouteImport } from './routes/_authenticated/parametres'
+import { Route as AuthenticatedSaasRouteImport } from './routes/_authenticated/saas'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAffiliationRoute =
+  AuthenticatedAffiliationRouteImport.update({
+    id: '/affiliation',
+    path: '/affiliation',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAnalytiqueRoute = AuthenticatedAnalytiqueRouteImport.update({
+  id: '/analytique',
+  path: '/analytique',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDocumentationRoute =
+  AuthenticatedDocumentationRouteImport.update({
+    id: '/documentation',
+    path: '/documentation',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedIntegrationsRoute =
+  AuthenticatedIntegrationsRouteImport.update({
+    id: '/integrations',
+    path: '/integrations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedParametresRoute = AuthenticatedParametresRouteImport.update({
+  id: '/parametres',
+  path: '/parametres',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSaasRoute = AuthenticatedSaasRouteImport.update({
+  id: '/saas',
+  path: '/saas',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/affiliation': typeof AuthenticatedAffiliationRoute
+  '/analytique': typeof AuthenticatedAnalytiqueRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/documentation': typeof AuthenticatedDocumentationRoute
+  '/integrations': typeof AuthenticatedIntegrationsRoute
+  '/parametres': typeof AuthenticatedParametresRoute
+  '/saas': typeof AuthenticatedSaasRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/affiliation': typeof AuthenticatedAffiliationRoute
+  '/analytique': typeof AuthenticatedAnalytiqueRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/documentation': typeof AuthenticatedDocumentationRoute
+  '/integrations': typeof AuthenticatedIntegrationsRoute
+  '/parametres': typeof AuthenticatedParametresRoute
+  '/saas': typeof AuthenticatedSaasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/affiliation': typeof AuthenticatedAffiliationRoute
+  '/_authenticated/analytique': typeof AuthenticatedAnalytiqueRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/documentation': typeof AuthenticatedDocumentationRoute
+  '/_authenticated/integrations': typeof AuthenticatedIntegrationsRoute
+  '/_authenticated/parametres': typeof AuthenticatedParametresRoute
+  '/_authenticated/saas': typeof AuthenticatedSaasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/reset-password'
+    | '/affiliation'
+    | '/analytique'
+    | '/dashboard'
+    | '/documentation'
+    | '/integrations'
+    | '/parametres'
+    | '/saas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/reset-password'
+    | '/affiliation'
+    | '/analytique'
+    | '/dashboard'
+    | '/documentation'
+    | '/integrations'
+    | '/parametres'
+    | '/saas'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/login'
+    | '/reset-password'
+    | '/_authenticated/affiliation'
+    | '/_authenticated/analytique'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/documentation'
+    | '/_authenticated/integrations'
+    | '/_authenticated/parametres'
+    | '/_authenticated/saas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +173,107 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/affiliation': {
+      id: '/_authenticated/affiliation'
+      path: '/affiliation'
+      fullPath: '/affiliation'
+      preLoaderRoute: typeof AuthenticatedAffiliationRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/analytique': {
+      id: '/_authenticated/analytique'
+      path: '/analytique'
+      fullPath: '/analytique'
+      preLoaderRoute: typeof AuthenticatedAnalytiqueRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/documentation': {
+      id: '/_authenticated/documentation'
+      path: '/documentation'
+      fullPath: '/documentation'
+      preLoaderRoute: typeof AuthenticatedDocumentationRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/integrations': {
+      id: '/_authenticated/integrations'
+      path: '/integrations'
+      fullPath: '/integrations'
+      preLoaderRoute: typeof AuthenticatedIntegrationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/parametres': {
+      id: '/_authenticated/parametres'
+      path: '/parametres'
+      fullPath: '/parametres'
+      preLoaderRoute: typeof AuthenticatedParametresRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/saas': {
+      id: '/_authenticated/saas'
+      path: '/saas'
+      fullPath: '/saas'
+      preLoaderRoute: typeof AuthenticatedSaasRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAffiliationRoute: typeof AuthenticatedAffiliationRoute
+  AuthenticatedAnalytiqueRoute: typeof AuthenticatedAnalytiqueRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDocumentationRoute: typeof AuthenticatedDocumentationRoute
+  AuthenticatedIntegrationsRoute: typeof AuthenticatedIntegrationsRoute
+  AuthenticatedParametresRoute: typeof AuthenticatedParametresRoute
+  AuthenticatedSaasRoute: typeof AuthenticatedSaasRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAffiliationRoute: AuthenticatedAffiliationRoute,
+  AuthenticatedAnalytiqueRoute: AuthenticatedAnalytiqueRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDocumentationRoute: AuthenticatedDocumentationRoute,
+  AuthenticatedIntegrationsRoute: AuthenticatedIntegrationsRoute,
+  AuthenticatedParametresRoute: AuthenticatedParametresRoute,
+  AuthenticatedSaasRoute: AuthenticatedSaasRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  LoginRoute: LoginRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

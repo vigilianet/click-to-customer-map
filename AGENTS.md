@@ -28,3 +28,10 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Backend is Lovable Cloud; the spec's "Edge Functions" are implemented as TanStack server routes (`/api/public/*`) and server functions, because this stack does not use Supabase Edge Functions.
+- Roles live in `public.user_roles` + `has_role()`, never on `profiles`, to prevent privilege escalation.
+- All app tables are admin-only via RLS (`has_role(auth.uid(),'admin')`); public writes (clicks, events) go through server routes with the service client after verifying the caller.
+- Session lives in browser storage, so the `_authenticated` layout runs client-side (`ssr: false`) and checks the session in `beforeLoad`.
+- Shared UI building blocks live in `src/components/app/`; design tokens only in `src/styles.css`.
