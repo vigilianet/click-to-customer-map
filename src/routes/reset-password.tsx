@@ -41,14 +41,14 @@ function ResetPage() {
     return () => data.subscription.unsubscribe();
   }, []);
 
-  const submit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     const r = schema.safeParse({ password, confirm });
-    if (!r.success) return toast.error(r.error.issues[0]?.message ?? "Invalide");
+    if (!r.success) { toast.error(r.error.issues[0]?.message ?? "Invalide"); return; }
     setBusy(true);
     const { error } = await supabase.auth.updateUser({ password: r.data.password });
     setBusy(false);
-    if (error) return toast.error("Mise à jour impossible");
+    if (error) { toast.error("Mise à jour impossible"); return; }
     toast.success("Mot de passe défini");
     navigate({ to: "/dashboard" });
   };

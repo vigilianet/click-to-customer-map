@@ -42,27 +42,27 @@ function LoginPage() {
     });
   }, [navigate]);
 
-  const submit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     if (mode === "reset") {
       const r = z.string().trim().email().safeParse(email);
-      if (!r.success) return toast.error("Email invalide");
+      if (!r.success) { toast.error("Email invalide"); return; }
       setBusy(true);
       const { error } = await supabase.auth.resetPasswordForEmail(r.data, {
         redirectTo: `${window.location.origin}/reset-password`,
       });
       setBusy(false);
-      if (error) return toast.error("Envoi impossible");
+      if (error) { toast.error("Envoi impossible"); return; }
       toast.success("Lien envoyé si le compte existe");
       setMode("login");
       return;
     }
     const parsed = schema.safeParse({ email, password });
-    if (!parsed.success) return toast.error(parsed.error.issues[0]?.message ?? "Champs invalides");
+    if (!parsed.success) { toast.error(parsed.error.issues[0]?.message ?? "Champs invalides"); return; }
     setBusy(true);
     const { error } = await supabase.auth.signInWithPassword(parsed.data);
     setBusy(false);
-    if (error) return toast.error("Identifiants incorrects");
+    if (error) { toast.error("Identifiants incorrects"); return; }
     navigate({ to: "/dashboard" });
   };
 
